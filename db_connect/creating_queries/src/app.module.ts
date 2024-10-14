@@ -13,6 +13,12 @@ import { DevConfService } from './utils/providers/service_provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Song } from './songs/song.entity';
+import { PlayListModule } from './playlist/playlist.module';
+import { Artist } from './artist/artist.entity';
+import { User } from './users/user.entity';
+import { Playlist } from './playlist/playlist.entity';
+import { UserModule } from './users/user.module';
+import { ArtistModule } from './artist/artist.module';
 
 const devConfig = { port: 3000 };
 const prodConfig = { port: 4000 };
@@ -26,10 +32,13 @@ const prodConfig = { port: 4000 };
       port: 5432,
       username: 'postgres',
       password: 'Nautyy9',
-      entities: [Song],
+      entities: [Song, Artist, User, Playlist],
       synchronize: true,
     }),
     SongsModule,
+    PlayListModule,
+    UserModule,
+    ArtistModule,
   ],
   controllers: [AppController],
   providers: [

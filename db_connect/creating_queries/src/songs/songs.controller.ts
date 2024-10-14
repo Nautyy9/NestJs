@@ -93,7 +93,7 @@ export class SongsController {
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
+  delete(@Param('id', ParseIntPipe) id: string): Promise<DeleteResult> {
     return this.songsService.remove(id);
   }
 }

@@ -1,15 +1,25 @@
-import { Column, Entity, IsNull, PrimaryGeneratedColumn } from 'typeorm';
+import { Artist } from 'src/artist/artist.entity';
+import { Playlist } from 'src/playlist/playlist.entity';
+import {
+  Column,
+  Entity,
+  IsNull,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('songs')
 export class Song {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   title: string;
 
-  @Column('varchar', { array: true })
-  artists: string[];
+  // @Column('varchar', { array: true })
+  // artists: string[];
 
   @Column('date')
   releasedDate: Date;
@@ -19,4 +29,11 @@ export class Song {
 
   @Column({ type: 'text', nullable: true })
   lyrics?: string;
+
+  @ManyToMany(() => Artist, (artist) => artist.songs, { cascade: true })
+  @JoinTable({ name: 'songs_artists' })
+  artists: Artist[];
+
+  @ManyToMany(() => Playlist, (playList) => playList.songs)
+  playLists?: Playlist[];
 }
