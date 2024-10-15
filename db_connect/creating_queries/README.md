@@ -58,6 +58,9 @@ async findAll(): Promise<Playlist[]> {
 ## Update vs Create
 
 - Well we generally use the create method to create the properties and methods and then save them with repo.save()
+  ```tsx
+  repo.save();
+  ```
 - With update we update the values of the fields after getting the respective data from the id||other then we use the repo.update() method to update the record passing the id and the currently updating entity. This works with Non-connected Tables or if we do have connected tables but we don't want to update the connected Table
 
   ```tsx
