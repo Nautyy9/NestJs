@@ -67,7 +67,7 @@ async findAll(): Promise<Playlist[]> {
   repo.update();
   ```
 
-- But if we want to update the other connected Table we have to use the repo.save() method because we create a new record when we want to update other Tables since we can't update other Tables from selected Tabls `**Not without QueryBuilders**` hence we need to overwrite the current record.
+- But if we want to update the other connected Table we have to use the repo.save() method because we create a new record when we want to update other Tables since we can't update other Tables from selected Tabls **`Not without QueryBuilders`** hence we need to overwrite the current record.
   ```tsx
   repo.save();
   ```
