@@ -11,38 +11,32 @@ import { LoggerMiddleware } from './utils/middleware/middleware.middleware';
 import { SongsController } from './songs/songs.controller';
 import { DevConfService } from './utils/providers/service_provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
-import { Song } from './songs/song.entity';
+
 import { PlayListModule } from './playlist/playlist.module';
-import { Artist } from './artist/artist.entity';
-import { User } from './users/user.entity';
-import { Playlist } from './playlist/playlist.entity';
+// import { Song } from './songs/song.entity';
+// import { Artist } from './artist/artist.entity';
+// import { User } from './users/user.entity';
+// import { Playlist } from './playlist/playlist.entity';
 import { UserModule } from './users/user.module';
 import { ArtistModule } from './artist/artist.module';
-import { AuthController } from './auth/auth.controller';
-import { AuthService } from './auth/auth.service';
+// import { AuthController } from './auth/auth.controller';
+// import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
-
+import { SeedModule } from './seed/seed.module';
+import { dataSourceOptions } from 'db/data-source';
+import { DataSource } from 'typeorm';
 const devConfig = { port: 3000 };
 const prodConfig = { port: 4000 };
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      database: 'spotify-clone',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'Nautyy9',
-      entities: [Song, Artist, User, Playlist],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     AuthModule,
     SongsModule,
     PlayListModule,
     UserModule,
     ArtistModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [
