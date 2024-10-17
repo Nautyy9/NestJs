@@ -1,9 +1,4 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SongsModule } from './songs/songs.module';
@@ -13,24 +8,31 @@ import { DevConfService } from './utils/providers/service_provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { PlayListModule } from './playlist/playlist.module';
-// import { Song } from './songs/song.entity';
-// import { Artist } from './artist/artist.entity';
-// import { User } from './users/user.entity';
-// import { Playlist } from './playlist/playlist.entity';
 import { UserModule } from './users/user.module';
 import { ArtistModule } from './artist/artist.module';
 // import { AuthController } from './auth/auth.controller';
 // import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { SeedModule } from './seed/seed.module';
-import { dataSourceOptions } from 'db/data-source';
+import { dataSourceOptions, typeOrmAsyncConfig } from 'db/data-source';
 import { DataSource } from 'typeorm';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 const devConfig = { port: 3000 };
 const prodConfig = { port: 4000 };
 
+import { validate } from '../env.validation';
+// When you want to use ConfigModule in other modules, you'll need to import it (as is standard with any Nest module).
 @Module({
   imports: [
-    TypeOrmModule.forRoot(dataSourceOptions),
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+    ConfigModule.forRoot({
+      envFilePath: ['.development.env', '.production.env'],
+      // @ with below i will not need to import ConfigModule in other modules
+      isGlobal: true,
+      load: [configuration],
+      validate: validate,
+    }),
     AuthModule,
     SongsModule,
     PlayListModule,

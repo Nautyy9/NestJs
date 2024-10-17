@@ -23,7 +23,10 @@ export class AuthController {
     private userService: UserService,
     private authService: AuthService,
   ) {}
-
+  @Get('test')
+  testEnv() {
+    return this.authService.getEnvVariables();
+  }
   @Post('signup')
   signup(
     @Body()

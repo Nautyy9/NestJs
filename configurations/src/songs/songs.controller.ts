@@ -17,7 +17,7 @@ import {
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 
-import { Connection } from 'types/types';
+import { Connection } from '../../types/types';
 import { Song } from './song.entity';
 import { CreateSongDTO } from './songs_dto/songs.dto';
 import { DeleteResult, UpdateResult } from 'typeorm';

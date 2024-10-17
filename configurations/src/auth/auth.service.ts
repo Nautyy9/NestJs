@@ -8,14 +8,24 @@ import { ArtistService } from 'src/artist/artist.service';
 import { Enable2FAType, PayloadType } from 'types/types';
 import * as speakeasy from 'speakeasy';
 import { UpdateResult } from 'typeorm';
-import { ValidateTokenDTO } from './dto/token.dto';
+import { ConfigService } from '@nestjs/config';
+// import { ValidateTokenDTO } from './dto/token.dto';
+
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private artistService: ArtistService,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
+
+  getEnvVariables() {
+    return {
+      port: this.configService.get<number>('port'),
+    };
+  }
+
   async login(
     loginDTO: LoginDTO,
   ): Promise<
