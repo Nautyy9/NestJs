@@ -64,6 +64,8 @@ export class AuthController {
   ) {
     return this.authService.login(loginDTO);
   }
+
+  @ApiBearerAuth('JWT-auth')
   @Get('enable-2fa')
   @UseGuards(JwtAuthGaurd)
   enable2FA(
@@ -72,6 +74,8 @@ export class AuthController {
   ): Promise<Enable2FAType> {
     return this.authService.enable2FA(req.user.userId);
   }
+
+  @ApiBearerAuth('JWT-auth')
   @Post('validate-2fa')
   @UseGuards(JwtAuthGaurd)
   validate2FA(
@@ -84,6 +88,7 @@ export class AuthController {
     );
   }
 
+  @ApiBearerAuth('JWT-auth')
   @Get('disable-2fa')
   @UseGuards(JwtAuthGaurd)
   disable2FA(
